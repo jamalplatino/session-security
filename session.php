@@ -2,7 +2,7 @@
 
     class session_CLASS{
 
-        private function sessionSTART($name="jam", $lifetime=10800, $path='/', $domain =null, $secure=1, $http_only=1){
+        private function sessionSTART($name="jam", $lifetime=7600, $path='/', $domain =null, $secure=1, $http_only=1){
 
             if (empty($_SESSION)) {
                 session_name($name ."_session");
@@ -59,6 +59,15 @@
                 $_SESSION['discard_after'] = $now + 3600;
             }
             
+        }
+        
+        private function set_Session_Terminate(){
+            session_unset($_SESSION);
+            session_destroy($_SESSION);
+            // fixed login page
+            define('LOGIN_PAGE', 'https://localhost/hospital/login.php');
+            header('Location:' .LOGIN_PAGE);
+            return exit;die();
         }
 
         public function execute_Session_Code(){
